@@ -1,0 +1,19 @@
+{
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/dashboard-admin",
+        "has": [
+          { "type": "host", "value": "admin.catatin.ai" }
+        ]
+      },
+      {
+        "source": "/",
+        "destination": "/dashboard-user",
+        "has": [
+          { "type": "host", "value": "app.catatin.ai" }
+        ]
+      }
+    ]
+  }
+  
