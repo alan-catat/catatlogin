@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ENVIRONMENT_SYSTEM, brandColors } from "@/constants/test-data";
+<<<<<<< HEAD
+=======
+import SignUpForm from "@/components/auth/SignUpForm";
+>>>>>>> 0c999da (update fitur dashboard user)
 
 // --- Types ---
 type BillingPlan = {
@@ -180,9 +184,21 @@ export default function HomePage() {
           >
             Login
           </Link>
+<<<<<<< HEAD
         </div>
       </header>
 
+=======
+           <Link
+          href="/auth/dashboard-user/signup"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#05668D] text-white font-medium shadow-sm hover:bg-[#04506c] hover:scale-105 active:scale-95 transition"
+        >
+          Daftar
+        </Link>
+        </div>
+      </header>
+       
+>>>>>>> 0c999da (update fitur dashboard user)
       {/* Hero / Intro */}
       <section className="flex flex-col items-center text-center mt-12 px-6">
         <h2 className="text-4xl font-extrabold mb-4">
