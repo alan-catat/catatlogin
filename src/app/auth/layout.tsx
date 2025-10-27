@@ -26,7 +26,7 @@ export default function AuthLayout({
             <div
               className="absolute inset-0 overflow-hidden"
               style={{
-                background: `linear-gradient(105deg, #0566BD, ${brandColors.primaryGreen})`,
+                background: `linear-gradient(105deg, #2e2e2e)`,
               }}
             >
               <GridShape />
@@ -43,11 +43,9 @@ export default function AuthLayout({
                   className="rounded-full"
                 />
               </div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-[#0566BD] to-[#A8E063] bg-clip-text text-transparent">
-                {appName.toUpperCase()}
-              </h2>
+
               <p className="text-white dark:text-gray-400 max-w-xs">
-                Welcome to the {appName} dashboard! Please sign in to continue.
+                Selamat datang di {appName} <br /> Sekarang catat apapun gak perlu repot lagi.
               </p>
             </div>
           </div>

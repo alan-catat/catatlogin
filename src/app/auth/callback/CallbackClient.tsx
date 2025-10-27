@@ -3,38 +3,41 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/client";
 
 export default function CallbackClient() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan") || "free";
+  const token = searchParams.get("token"); // contoh token aktivasi dari n8n
 
-  const supabase = createClient();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
 
   useEffect(() => {
-    const handleCallback = async () => {
+    const verifyAccount = async () => {
       try {
-        const {
-          data: { session },
-          error,
-        } = await supabase.auth.getSession();
+        // Contoh verifikasi token lewat n8n
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_N8N_VERIFY_ACCOUNT_URL}?token=${token}`,
+          { cache: "no-store" }
+        );
 
-        if (error || !session) {
-          console.error("Session error:", error?.message);
+        if (!res.ok) throw new Error("Gagal verifikasi");
+        const data = await res.json();
+
+        if (data.success) {
+          // Simpan data user ke localStorage (contoh)
+          localStorage.setItem("user", JSON.stringify(data.user));
+          setStatus("success");
+        } else {
           setStatus("error");
-          return;
         }
-
-        setStatus("success");
       } catch (err) {
-        console.error("Unexpected error:", err);
+        console.error("Verification error:", err);
         setStatus("error");
       }
     };
 
-    handleCallback();
-  }, [supabase]);
+    verifyAccount();
+  }, [token]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-center">

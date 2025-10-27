@@ -2,13 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ENVIRONMENT_SYSTEM, brandColors } from "@/constants/test-data";
-<<<<<<< HEAD
-=======
+import { ENVIRONMENT_SYSTEM } from "@/constants/test-data";
 import SignUpForm from "@/components/auth/SignUpForm";
->>>>>>> 0c999da (update fitur dashboard user)
 
-// --- Types ---
 type BillingPlan = {
   id: string;
   package_id: string;
@@ -36,7 +32,6 @@ export default function HomePage() {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Simulasi fetch data (contoh)
   useEffect(() => {
     setTimeout(() => {
       const sampleData: Package[] = [
@@ -175,31 +170,27 @@ export default function HomePage() {
       {/* Header */}
       <header className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-         <h1 className="text-3xl font-bold bg-gradient-to-r from-[#0566BD] to-[#A8E063] bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#0566BD] to-[#A8E063] bg-clip-text text-transparent">
             {ENVIRONMENT_SYSTEM.appName}
           </h1>
-          <Link
-            href="/auth/dashboard-user/signin"
-            className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
-          >
-            Login
-          </Link>
-<<<<<<< HEAD
+          <div className="flex items-center gap-3">
+            <Link
+              href="/auth/dashboard-user/signin"
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
+            >
+              Login
+            </Link>
+            <Link
+              href="/auth/dashboard-user/signup"
+              className="px-4 py-2 rounded-lg bg-[#05668D] text-white font-medium hover:bg-[#04506c] transition"
+            >
+              Daftar
+            </Link>
+          </div>
         </div>
       </header>
 
-=======
-           <Link
-          href="/auth/dashboard-user/signup"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#05668D] text-white font-medium shadow-sm hover:bg-[#04506c] hover:scale-105 active:scale-95 transition"
-        >
-          Daftar
-        </Link>
-        </div>
-      </header>
-       
->>>>>>> 0c999da (update fitur dashboard user)
-      {/* Hero / Intro */}
+      {/* Hero Section */}
       <section className="flex flex-col items-center text-center mt-12 px-6">
         <h2 className="text-4xl font-extrabold mb-4">
           Kelola Keuangan Jadi Lebih Mudah 💰
@@ -234,87 +225,73 @@ export default function HomePage() {
       {/* Pricing Cards */}
       <main className="flex-1">
         <div id="pricing" className="grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto w-full px-6 mb-16">
-{packages.map((pkg, index) => {
-  const plan = pkg.billing_plans.find(
-    (bp) => bp.billing_cycle === billingCycle
-  );
-  if (!plan) return null;
+          {packages.map((pkg, index) => {
+            const plan = pkg.billing_plans.find((bp) => bp.billing_cycle === billingCycle);
+            if (!plan) return null;
 
-  return (
-    <div
-      key={pkg.id}
-      style={{
-        transitionDelay: `${index * 100}ms`, // delay animasi antar kartu
-      }}
-      className={`relative border rounded-2xl p-6 flex flex-col shadow-sm transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl
-        ${pkg.name === "Pro" ? "bg-gray-900 text-white" : "bg-white"}
-      `}
-    >
-      {pkg.name === "Pro" && (
-        <span className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold px-3 py-1 rounded-bl-lg">
-          Paling Populer
-        </span>
-      )}
+            return (
+              <div
+                key={pkg.id}
+                style={{ transitionDelay: `${index * 100}ms` }}
+                className={`relative border rounded-2xl p-6 flex flex-col shadow-sm transform transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl
+                ${pkg.name === "Pro" ? "bg-gray-900 text-white" : "bg-white"}
+              `}
+              >
+                {pkg.name === "Pro" && (
+                  <span className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                    Paling Populer
+                  </span>
+                )}
 
-      <h3 className="text-xl font-semibold">{pkg.name}</h3>
-      <p
-        className={`mt-1 text-sm ${pkg.name === "Pro" ? "text-gray-300" : "text-gray-500"
-          }`}
-      >
-        {pkg.name === "Free"
-          ? "Cocok untuk pencatatan pribadi"
-          : pkg.name === "Pro"
-            ? "Untuk pengguna aktif dan bisnis kecil"
-            : "Untuk tim dan usaha skala besar"}
-      </p>
+                <h3 className="text-xl font-semibold">{pkg.name}</h3>
+                <p
+                  className={`mt-1 text-sm ${pkg.name === "Pro" ? "text-gray-300" : "text-gray-500"}`}
+                >
+                  {pkg.name === "Free"
+                    ? "Cocok untuk pencatatan pribadi"
+                    : pkg.name === "Pro"
+                      ? "Untuk pengguna aktif dan bisnis kecil"
+                      : "Untuk tim dan usaha skala besar"}
+                </p>
 
-      <div className="flex items-baseline mt-4">
-        <span className="text-3xl font-bold">
-          Rp{plan.price.toLocaleString("id-ID")}
-        </span>
-        <span className="ml-1 text-sm">
-          /{billingCycle === "monthly" ? "bulan" : "tahun"}
-        </span>
-      </div>
+                <div className="flex items-baseline mt-4">
+                  <span className="text-3xl font-bold">
+                    Rp{plan.price.toLocaleString("id-ID")}
+                  </span>
+                  <span className="ml-1 text-sm">
+                    /{billingCycle === "monthly" ? "bulan" : "tahun"}
+                  </span>
+                </div>
 
-      {/* Included Channels */}
-      <ul className="flex gap-2 mt-3 flex-wrap">
-        {pkg.included_channels.map((ch, idx) => (
-          <li
-            key={idx}
-            className="px-2 py-1 text-xs bg-gray-200 rounded-full text-gray-700"
-          >
-            {ch}
-          </li>
-        ))}
-      </ul>
+                <ul className="flex gap-2 mt-3 flex-wrap">
+                  {pkg.included_channels.map((ch, idx) => (
+                    <li key={idx} className="px-2 py-1 text-xs bg-gray-200 rounded-full text-gray-700">
+                      {ch}
+                    </li>
+                  ))}
+                </ul>
 
-      {/* Features */}
-      <ul
-        className={`mt-6 space-y-2 text-sm flex-1 ${pkg.name === "Pro" ? "" : "text-gray-700"
-          }`}
-      >
-        {plan.features.map((f, i) => (
-          <li key={i}>✓ {f}</li>
-        ))}
-      </ul>
+                <ul className={`mt-6 space-y-2 text-sm flex-1 ${pkg.name === "Pro" ? "" : "text-gray-700"}`}>
+                  {plan.features.map((f, i) => (
+                    <li key={i}>✓ {f}</li>
+                  ))}
+                </ul>
 
-      <Link
-        href={`/subscription?plan=${pkg.name.toLowerCase()}`}
-        className={`mt-6 w-full py-2 rounded-lg font-medium text-center block ${pkg.name === "Pro"
-          ? "bg-indigo-500 hover:bg-indigo-600 text-white"
-          : "bg-gray-900 text-white hover:bg-gray-800"
-          }`}
-      >
-        Mulai {pkg.name}
-      </Link>
-    </div>
-  );
-})}
-
+                <Link
+                  href={`/subscription?plan=${pkg.name.toLowerCase()}`}
+                  className={`mt-6 w-full py-2 rounded-lg font-medium text-center block ${pkg.name === "Pro"
+                    ? "bg-indigo-500 hover:bg-indigo-600 text-white"
+                    : "bg-gray-900 text-white hover:bg-gray-800"
+                    }`}
+                >
+                  Mulai {pkg.name}
+                </Link>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Feature Comparison Table */}
+        {/* Feature Comparison */}
         <section className="max-w-5xl mx-auto w-full px-6 mb-20 overflow-x-auto">
           <h3 className="text-2xl font-bold mb-6 text-center">
             Bandingkan Paket Kami
@@ -334,22 +311,14 @@ export default function HomePage() {
               {Array.from(
                 new Set(
                   packages.flatMap((pkg) =>
-                    pkg.billing_plans
-                      .find((bp) => bp.billing_cycle === billingCycle)
-                      ?.features || []
+                    pkg.billing_plans.find((bp) => bp.billing_cycle === billingCycle)?.features || []
                   )
                 )
               ).map((feature, idx) => (
-                <tr
-                  key={idx}
-                  className={`border-t ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    } hover:bg-gray-100 transition`}
-                >
+                <tr key={idx} className={`border-t ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition`}>
                   <td className="p-3 border">{feature}</td>
                   {packages.map((pkg) => {
-                    const plan = pkg.billing_plans.find(
-                      (bp) => bp.billing_cycle === billingCycle
-                    );
+                    const plan = pkg.billing_plans.find((bp) => bp.billing_cycle === billingCycle);
                     const hasFeature = plan?.features.includes(feature);
                     return (
                       <td key={pkg.id} className="p-3 border text-center">

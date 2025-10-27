@@ -6,6 +6,7 @@ import {
   TableCell,
   TableHeader,
   TableRow,
+  TableHead,
 } from "../ui/table";
 import Badge from "../ui/badge/Badge";
 import { useState } from "react";
@@ -51,6 +52,7 @@ export default function StatisticsChart({ cashFlows }: CashFlowsTableProps) {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
+      {/* Header section */}
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
           Cash Flows
@@ -78,41 +80,53 @@ export default function StatisticsChart({ cashFlows }: CashFlowsTableProps) {
         </div>
       </div>
 
+      {/* Table Section */}
       <div className="max-w-full overflow-x-auto">
         <Table>
           <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
             <TableRow>
-              <TableCell isHeader>Category</TableCell>
-              <TableCell isHeader>Group</TableCell>
-              <TableCell isHeader>Item</TableCell>
-              <TableCell isHeader>Type</TableCell>
-              <TableCell isHeader>Quantity</TableCell>
-              <TableCell isHeader>Unit</TableCell>
-              <TableCell isHeader>Amount</TableCell>
-              <TableCell isHeader>Merchant</TableCell>
+              <TableHead>Category</TableHead>
+              <TableHead>Group</TableHead>
+              <TableHead>Item</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Quantity</TableHead>
+              <TableHead>Unit</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Merchant</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {filteredCashFlows.map((cf) => (
-              <TableRow key={cf.id}>
-                <TableCell>{cf.category.name}</TableCell>
-                <TableCell>{cf.category.group.name}</TableCell>
-                <TableCell>{cf.flow_items}</TableCell>
-                <TableCell>
-                  <Badge
-                    size="sm"
-                    color={cf.flow_type === "income" ? "success" : "error"}
-                  >
-                    {cf.flow_type}
-                  </Badge>
+            {filteredCashFlows.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="text-center py-4 text-gray-500 dark:text-gray-400"
+                >
+                  No data available
                 </TableCell>
-                <TableCell>{cf.flow_qty}</TableCell>
-                <TableCell>{cf.flow_unit}</TableCell>
-                <TableCell>${cf.flow_amount.toLocaleString()}</TableCell>
-                <TableCell>{cf.flow_merchant}</TableCell>
               </TableRow>
-            ))}
+            ) : (
+              filteredCashFlows.map((cf) => (
+                <TableRow key={cf.id}>
+                  <TableCell>{cf.category.name}</TableCell>
+                  <TableCell>{cf.category.group.name}</TableCell>
+                  <TableCell>{cf.flow_items}</TableCell>
+                  <TableCell>
+                    <Badge
+                      size="sm"
+                      color={cf.flow_type === "income" ? "success" : "error"}
+                    >
+                      {cf.flow_type}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{cf.flow_qty}</TableCell>
+                  <TableCell>{cf.flow_unit}</TableCell>
+                  <TableCell>${cf.flow_amount.toLocaleString()}</TableCell>
+                  <TableCell>{cf.flow_merchant}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

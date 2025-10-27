@@ -1,19 +1,28 @@
-import { Metadata } from 'next'
-import DashboardClient from './DashboardClient'
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation'
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "FINANCIAL-EXTRACTOR | DASHBOARD",
-}
+export default function DashboardPage() {
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
 
-export default async  function DashboardPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    // redirect ke halaman signin jika user tidak ditemukan
-    redirect('/auth/dashboard-user/signin')
-  }
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      router.replace("/auth/sign-in");
+      return;
+    }
+    setUser(JSON.parse(storedUser));
+  }, [router]);
 
-  return <DashboardClient />
+  if (!user) return <p>Loading...</p>;
+
+  return (
+    <div className="p-6">
+      <h1 className="text-xl font-semibold mb-2">
+        Selamat datang, {user.firstName} 👋
+      </h1>
+      <p className="text-gray-600">{user.email}</p>
+    </div>
+  );
 }
